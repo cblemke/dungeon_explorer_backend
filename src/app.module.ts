@@ -3,7 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CharacterModule } from './character/character.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Character } from './character/entities/character.entitiy';
+import { Character } from './character/data/character.entitiy';
+import { DungeonEventModule } from './dungeonEvent/dungeonEvent.module';
+import { EnemyModule } from './enemy/enemy.module';
+import { Enemy } from './enemy/data/enemy.entity';
 
 
 
@@ -16,9 +19,9 @@ import { Character } from './character/entities/character.entitiy';
       username: 'postgres',
       password: '1234',
       database: 'dungeon_explorer_db',
-      entities: [Character],
+      entities: [Character, Enemy],
       synchronize: true
-    })],
+    }), DungeonEventModule, EnemyModule],
   controllers: [AppController],
   providers: [AppService],
 })

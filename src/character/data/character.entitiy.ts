@@ -50,4 +50,10 @@ export class Character {
     @Column('jsonb')
     appareance: CharacterAppareance;
 
+    @Column()
+    hasPotion: boolean;
+
+    @Column()
+    hasSupplies: boolean;
+
 }
