@@ -7,6 +7,8 @@ import { Character } from './character/data/character.entitiy';
 import { DungeonEventModule } from './dungeonEvent/dungeonEvent.module';
 import { EnemyModule } from './enemy/enemy.module';
 import { Enemy } from './enemy/data/enemy.entity';
+import { DungeonModule } from './dungeon/dungeon.module';
+import { Dungeon } from './dungeon/data/dungeon.entity';
 
 
 
@@ -19,9 +21,9 @@ import { Enemy } from './enemy/data/enemy.entity';
       username: 'postgres',
       password: '1234',
       database: 'dungeon_explorer_db',
-      entities: [Character, Enemy],
+      entities: [Character, Enemy, Dungeon],
       synchronize: true
-    }), DungeonEventModule, EnemyModule],
+    }), DungeonEventModule, EnemyModule, DungeonModule],
   controllers: [AppController],
   providers: [AppService],
 })

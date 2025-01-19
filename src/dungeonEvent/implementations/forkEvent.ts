@@ -1,27 +1,47 @@
+import { Dungeon } from "src/dungeon/data/dungeon.entity";
 import { DungeonEvent } from "../base/dungeonEvent";
 import { DungeonEventType } from "../base/dungeonEvent.enums";
+import { Injectable } from "@nestjs/common";
+
 
 export enum ForkType {
     TwoWays = 'two_ways',
     ThreeWays = 'three_ways',
 }
 
-export class ForkEvent extends DungeonEvent {    
+@Injectable()
+export class ForkEvent implements DungeonEvent<number> {    
 
+    type: DungeonEventType;
+    description: string;
+    isCompleted: boolean;
     forkType : ForkType;
-    bestPath: number; // Camino considerado el mejor
+    bestPath: number; 
     stepsToAdd: number;
+
     constructor() {
-      super(Math.floor(Math.random() * 100), DungeonEventType.Fork );
-      this.forkType = Math.floor(Math.random() * 2) == 0 ? ForkType.TwoWays  : ForkType.ThreeWays;
-      this.bestPath = Math.floor(Math.random() * (this.forkType === ForkType.TwoWays ? 2 : 3)) + 1; // Generar el mejor camino   
-      this.isCompleted = null;
+      this.type = DungeonEventType.Fork;
+      this.isCompleted = false;
+    }
+
+    startEvent() : string {
+        this.isCompleted = false;
+        console.log(`se ha iniciado un nuevo evento tipo "bifurcación". El jugador debe elegir un camino.`)       
+        const message = `estás ante una bifurcación de ${this.forkType == ForkType.TwoWays ? 2 : 3} caminos... ¿cuál eligirás?`;
+        return message;
     }
   
-    resolve(playerChoice: number): string {
 
+    resolve(dungeon : Dungeon, playerChoice: number): string {
+
+        this.forkType = Math.floor(Math.random() * 2) == 0 ? ForkType.TwoWays  : ForkType.ThreeWays;
+        this.bestPath = Math.floor(Math.random() * (this.forkType === ForkType.TwoWays ? 2 : 3)) + 1; // Generar el mejor camino   
 
         console.log(`Iniciando evento bifurcación`);
+
+        if (this.isCompleted) {
+            return 'El evento se ha completado y no se puede repetir' 
+        };
 
         const numberOfPaths = this.forkType === ForkType.TwoWays ? 2 : 3;
 
@@ -39,7 +59,7 @@ export class ForkEvent extends DungeonEvent {
         }
         
 
-        // dungeon.AddSteps(stepsToAdd);
+        dungeon.addSteps(this.stepsToAdd);
 
         console.log(`El mejor camino es el ${this.bestPath}`);
         const message =
@@ -50,6 +70,7 @@ export class ForkEvent extends DungeonEvent {
         console.log(message);
 
         this.isCompleted = true;
+        dungeon.takeAStep();
         return message;       
 
     }            
@@ -57,6 +78,4 @@ export class ForkEvent extends DungeonEvent {
 }
     
     
-
-
 
