@@ -6,6 +6,7 @@ import { DUNGEON_EVENT_SERVICES } from 'src/dungeonEvent/dungeonEvent.token';
 import { DungeonEvent } from 'src/dungeonEvent/base/dungeonEvent';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CampaignService } from 'src/campaign/campaign.service';
 
 @Injectable()
 export class DungeonService {
@@ -17,11 +18,13 @@ export class DungeonService {
         @Inject(DUNGEON_EVENT_SERVICES)
         private readonly eventServices: Record<string, DungeonEvent<any>>, // Mapa de servicios
         @InjectRepository(Dungeon)
-                private dungeonRepository: Repository<Dungeon>,
+                private dungeonRepository: Repository<Dungeon>, private campaignService: CampaignService
       ) {}
       
     async create(dungeon: Partial<Dungeon>): Promise<Dungeon> {
         const newDungeon = this.dungeonRepository.create(dungeon);
+        const relatedCampaign = await this.campaignService.find(dungeon.campaign.id);
+        newDungeon.campaign = relatedCampaign;
         return this.dungeonRepository.save(newDungeon);
     }
     

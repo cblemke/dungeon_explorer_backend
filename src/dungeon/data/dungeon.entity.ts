@@ -1,3 +1,4 @@
+import { Campaign } from "src/campaign/data/campaign.entity";
 import { DungeonEventType } from "src/dungeonEvent/base/dungeonEvent.enums";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
@@ -13,21 +14,21 @@ export class Dungeon {
     @Column()
     description: string;  
  
-    @Column({ type: 'int', default: 12 })
+    @Column({ type: 'int', default: 10 })
     numberOfSteps: number; 
   
     currentEvent : DungeonEventType;
     
-    //@ManyToOne()
-    //campaign: Campaign
+    @ManyToOne(() => Campaign)
+    campaign: Campaign
 
     addSteps(amount: number) 
     {
-        if(this.numberOfSteps < 20)
+        if(this.numberOfSteps < 15)
             this.numberOfSteps += amount;
 
         else 
-            console.log("La mazmorra ya dura demasiado");
+            console.log("La mazmorra ya dura demasiado!");
     }
 
     takeAStep() 
@@ -35,6 +36,4 @@ export class Dungeon {
         if(this.numberOfSteps > 0)
             this.numberOfSteps -= 1;
     }
-
-
 }

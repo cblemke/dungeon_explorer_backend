@@ -9,6 +9,8 @@ import { EnemyModule } from './enemy/enemy.module';
 import { Enemy } from './enemy/data/enemy.entity';
 import { DungeonModule } from './dungeon/dungeon.module';
 import { Dungeon } from './dungeon/data/dungeon.entity';
+import { CampaignModule } from './campaign/campaign.module';
+import { Campaign } from './campaign/data/campaign.entity';
 
 
 
@@ -21,9 +23,9 @@ import { Dungeon } from './dungeon/data/dungeon.entity';
       username: 'postgres',
       password: '1234',
       database: 'dungeon_explorer_db',
-      entities: [Character, Enemy, Dungeon],
+      entities: [Character, Enemy, Dungeon, Campaign],
       synchronize: true
-    }), DungeonEventModule, EnemyModule, DungeonModule],
+    }), DungeonEventModule, EnemyModule, DungeonModule, CampaignModule],
   controllers: [AppController],
   providers: [AppService],
 })

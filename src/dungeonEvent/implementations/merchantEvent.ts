@@ -25,14 +25,11 @@ export class MerchantEvent implements DungeonEvent<boolean> {
     }
   
     resolve(dungeon : Dungeon, playerChoice: boolean): string {
-
         console.log(`Resolviendo evento con mercader`);      
- 
         const message = "Los personajes compran sus cosas";
         console.log(message);
         this.isCompleted = true;
         dungeon.takeAStep();
-
         return message;       
     }            
     
