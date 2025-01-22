@@ -12,7 +12,7 @@ import { CampaignService } from 'src/campaign/campaign.service';
 export class DungeonService {
 
     private currentDungeon: Dungeon | null = null;
-    private lastEvent: DungeonEventType;
+    private lastEventType: DungeonEventType;
 
     constructor(
         @Inject(DUNGEON_EVENT_SERVICES)
@@ -59,18 +59,18 @@ export class DungeonService {
                     return "¡Debes completar el evento en curso primero!";
                 } 
             const newEvent = this.chooseNextEvent();
-            this.currentDungeon.currentEvent=newEvent; 
-            const message =  this.eventServices[this.currentDungeon.currentEvent].startEvent();   
+            this.currentDungeon.currentEvent.type=newEvent; 
+            const message =  this.eventServices[this.currentDungeon.currentEvent.type].startEvent();   
             return message;
         }
     }
 
     async makeADecision(decision : any) : Promise<string> {
 
-        if (!this.eventServices[this.currentDungeon.currentEvent].isCompleted)
+        if (!this.eventServices[this.currentDungeon.currentEvent.type].isCompleted)
         {
-            const message = this.eventServices[this.currentDungeon.currentEvent].resolve(this.currentDungeon, decision);    
-            this.lastEvent = this.currentDungeon.currentEvent; 
+            const message = this.eventServices[this.currentDungeon.currentEvent.type].resolve(this.currentDungeon, decision);    
+            this.lastEventType = this.currentDungeon.currentEvent.type; 
             this.currentDungeon.currentEvent = null;
             return message;
         }
@@ -86,7 +86,7 @@ export class DungeonService {
 
         console.log(`Elegido ${randomEvent}`)
 
-        if (randomEvent == this.lastEvent)
+        if (randomEvent == this.lastEventType)
         {
             return this.chooseNextEvent();
         }

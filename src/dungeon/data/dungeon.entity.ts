@@ -1,4 +1,5 @@
 import { Campaign } from "src/campaign/data/campaign.entity";
+import { DungeonEvent } from "src/dungeonEvent/base/dungeonEvent";
 import { DungeonEventType } from "src/dungeonEvent/base/dungeonEvent.enums";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
@@ -17,7 +18,7 @@ export class Dungeon {
     @Column({ type: 'int', default: 10 })
     numberOfSteps: number; 
   
-    currentEvent : DungeonEventType;
+    currentEvent : DungeonEvent<any>;
     
     @ManyToOne(() => Campaign)
     campaign: Campaign

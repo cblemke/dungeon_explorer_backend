@@ -11,6 +11,10 @@ import { DungeonModule } from './dungeon/dungeon.module';
 import { Dungeon } from './dungeon/data/dungeon.entity';
 import { CampaignModule } from './campaign/campaign.module';
 import { Campaign } from './campaign/data/campaign.entity';
+import { AdventureModule } from './adventure/adventure.module';
+import { AdventureControllerController } from './adventure-controller/adventure-controller.controller';
+import { AdventureServiceService } from './adventure.service/adventure.service.service';
+import { AdventureserviceService } from './adventureservice/adventureservice.service';
 
 
 
@@ -25,8 +29,8 @@ import { Campaign } from './campaign/data/campaign.entity';
       database: 'dungeon_explorer_db',
       entities: [Character, Enemy, Dungeon, Campaign],
       synchronize: true
-    }), DungeonEventModule, EnemyModule, DungeonModule, CampaignModule],
-  controllers: [AppController],
-  providers: [AppService],
+    }), DungeonEventModule, EnemyModule, DungeonModule, CampaignModule, AdventureModule],
+  controllers: [AppController, AdventureControllerController],
+  providers: [AppService, AdventureServiceService, AdventureserviceService],
 })
 export class AppModule {}

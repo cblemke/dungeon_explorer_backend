@@ -16,4 +16,5 @@ export class Campaign{
     @OneToMany(() => Dungeon, (dungeon) => dungeon.campaign, { eager: true })
     dungeons: Dungeon[]     
 
+    isCompleted:  boolean;
 }

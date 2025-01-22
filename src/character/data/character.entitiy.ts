@@ -1,8 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { CharacterAppareance } from "./character.appareance";
 import { CharacterRace, CharacterClass, CharacterGender, CharacterState } from "./character.enums";
 import { CharacterStats } from "./character.stats";
 import { CharacterWeapon } from "./character.weapon";
+import { Adventure } from "src/adventure/data/adventure.entity";
 
 
 @Entity()
@@ -55,5 +56,8 @@ export class Character {
 
     @Column()
     hasSupplies: boolean;
+
+    @ManyToOne(() => Adventure, (adventure) => adventure.characters)
+    adventure: Adventure;
 
 }
